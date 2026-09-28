@@ -12,7 +12,7 @@
 #include "TimerManager.h"
 #include "WebSocketsModule.h"
 
-namespace
+namespace TwitchConst
 {
 	const TCHAR* TwitchIrcUrl = TEXT("wss://irc-ws.chat.twitch.tv:443");
 }
@@ -90,10 +90,19 @@ void UTwitchChatSubsystem::Disconnect()
 
 void UTwitchChatSubsystem::OpenSocket()
 {
+	if (Socket.IsValid())
+	{
+		Socket->OnConnected().RemoveAll(this);
+		Socket->OnConnectionError().RemoveAll(this);
+		Socket->OnClosed().RemoveAll(this);
+		Socket->OnMessage().RemoveAll(this);
+		Socket.Reset();
+	}
+	Pending.Reset();
 	Status = ReconnectAttempts > 0 ? ETwitchStatus::Reconnecting : ETwitchStatus::Connecting;
 	UE_LOG(LogVestuario, Log, TEXT("Twitch: conectando a #%s..."), *Channel);
 
-	Socket = FWebSocketsModule::Get().CreateWebSocket(TwitchIrcUrl);
+	Socket = FWebSocketsModule::Get().CreateWebSocket(TwitchConst::TwitchIrcUrl);
 	Socket->OnConnected().AddUObject(this, &UTwitchChatSubsystem::HandleConnected);
 	Socket->OnConnectionError().AddUObject(this, &UTwitchChatSubsystem::HandleConnectionError);
 	Socket->OnClosed().AddUObject(this, &UTwitchChatSubsystem::HandleClosed);
@@ -127,6 +136,11 @@ void UTwitchChatSubsystem::ScheduleReconnect()
 	if (!bWantConnection)
 	{
 		return;
+	}
+	UGameInstance* GameInstance = GetGameInstance();
+	if (GameInstance && GameInstance->GetTimerManager().IsTimerActive(ReconnectTimer))
+	{
+		return; // ya hay una reconexion pendiente (error + cierre llegan juntos)
 	}
 	Status = ETwitchStatus::Reconnecting;
 	++ReconnectAttempts;

@@ -139,7 +139,7 @@ void AVestuarioHUD::DrawHUD()
 		{
 			if (const AEnemyAIController* AI = Cast<AEnemyAIController>(It->GetController()))
 			{
-				DrawRight(FString::Printf(TEXT("Enemigo: %s"), *AI->GetStateName()), Y, Small, 1.2f * S, FLinearColor::Yellow);
+				DrawRight(FString::Printf(TEXT("Enemigo: %s"), *AI->GetStateDisplayName()), Y, Small, 1.2f * S, FLinearColor::Yellow);
 				Y += 22.f * S;
 			}
 		}

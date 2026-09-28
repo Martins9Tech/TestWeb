@@ -12,12 +12,12 @@
 
 #define LOCTEXT_NAMESPACE "Vestuario"
 
-namespace
+namespace LockerConst
 {
 	// Medidas del mesh SM_Locker (cm): 50 de fondo, 55 de ancho, frente en +X
 	const FVector HingeOffset(25.f, 27.5f, 0.f);
-	const float DoorHalfWidth = 27.5f;
-	const float OpenAngle = 105.f;
+	constexpr float DoorHalfWidth = 27.5f;
+	constexpr float OpenAngle = 105.f;
 }
 
 ALocker::ALocker()
@@ -32,11 +32,11 @@ ALocker::ALocker()
 
 	DoorPivot = CreateDefaultSubobject<USceneComponent>(TEXT("DoorPivot"));
 	DoorPivot->SetupAttachment(Root);
-	DoorPivot->SetRelativeLocation(HingeOffset);
+	DoorPivot->SetRelativeLocation(LockerConst::HingeOffset);
 
 	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Door"));
 	DoorMesh->SetupAttachment(DoorPivot);
-	DoorMesh->SetRelativeLocation(FVector(0.f, -DoorHalfWidth, 0.f));
+	DoorMesh->SetRelativeLocation(FVector(0.f, -LockerConst::DoorHalfWidth, 0.f));
 	DoorMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
@@ -69,7 +69,7 @@ void ALocker::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 	const float Speed = bForcedOpen ? 14.f : 7.f;
 	DoorAlpha = FMath::FInterpTo(DoorAlpha, DoorTarget, DeltaSeconds, Speed);
-	DoorPivot->SetRelativeRotation(FRotator(0.f, DoorAlpha * OpenAngle, 0.f));
+	DoorPivot->SetRelativeRotation(FRotator(0.f, DoorAlpha * LockerConst::OpenAngle, 0.f));
 }
 
 FVector ALocker::GetHideLocation() const

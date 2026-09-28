@@ -36,7 +36,7 @@ public:
 	virtual void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) override;
 
 	EEnemyState GetState() const { return State; }
-	FString GetStateName() const;
+	FString GetStateDisplayName() const;
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "IA")

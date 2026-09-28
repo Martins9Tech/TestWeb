@@ -11,9 +11,9 @@
 #include "Engine/World.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
-namespace
+namespace EnemyConst
 {
-	const float CapsuleHalfHeight = 115.f;
+	constexpr float CapsuleHalfHeight = 115.f;
 	// Debe coincidir con ENEMY_HEAD_ATTACH en Tools/Art/gen_meshes.py
 	const FVector HeadAttachOffset(30.f, 0.f, 195.f);
 }
@@ -22,16 +22,16 @@ AEnemyCharacter::AEnemyCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	GetCapsuleComponent()->InitCapsuleSize(38.f, CapsuleHalfHeight);
+	GetCapsuleComponent()->InitCapsuleSize(38.f, EnemyConst::CapsuleHalfHeight);
 
 	BodyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BodyMesh"));
 	BodyMesh->SetupAttachment(GetCapsuleComponent());
-	BodyMesh->SetRelativeLocation(FVector(0.f, 0.f, -CapsuleHalfHeight));
+	BodyMesh->SetRelativeLocation(FVector(0.f, 0.f, -EnemyConst::CapsuleHalfHeight));
 	BodyMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	HeadMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("HeadMesh"));
 	HeadMesh->SetupAttachment(BodyMesh);
-	HeadMesh->SetRelativeLocation(HeadAttachOffset);
+	HeadMesh->SetRelativeLocation(EnemyConst::HeadAttachOffset);
 	HeadMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	BreathAudio = CreateDefaultSubobject<UAudioComponent>(TEXT("BreathAudio"));
@@ -125,7 +125,7 @@ void AEnemyCharacter::UpdateProceduralAnimation(float DeltaSeconds)
 	const float Lean = 6.f + SpeedRatio * 14.f;
 	const float Sway = FMath::Sin(AnimTime * StepFreq) * (2.5f + SpeedRatio * 4.f);
 	const float Bob = FMath::Abs(FMath::Sin(AnimTime * StepFreq)) * (1.5f + SpeedRatio * 6.f);
-	BodyMesh->SetRelativeLocationAndRotation(FVector(0.f, 0.f, -CapsuleHalfHeight + Bob), FRotator(-Lean, 0.f, Sway));
+	BodyMesh->SetRelativeLocationAndRotation(FVector(0.f, 0.f, -EnemyConst::CapsuleHalfHeight + Bob), FRotator(-Lean, 0.f, Sway));
 
 	// Cabeza: tics bruscos cada pocos segundos (escuchando)
 	if (bKilling)
@@ -163,7 +163,7 @@ void AEnemyCharacter::UpdateFootsteps(float DeltaSeconds)
 	if (AVestuarioGameMode* GM = GetWorld()->GetAuthGameMode<AVestuarioGameMode>())
 	{
 		const float SpeedRatio = FMath::Clamp(Speed / ChaseSpeed, 0.f, 1.f);
-		const FVector Feet = GetActorLocation() - FVector(0.f, 0.f, CapsuleHalfHeight);
+		const FVector Feet = GetActorLocation() - FVector(0.f, 0.f, EnemyConst::CapsuleHalfHeight);
 		GM->PlaySound3D(EVestuarioSound::EnemyStep, Feet, 0.6f + 0.7f * SpeedRatio, FMath::FRandRange(0.85f, 1.05f));
 	}
 }

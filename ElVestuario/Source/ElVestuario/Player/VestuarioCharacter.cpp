@@ -306,7 +306,7 @@ void AVestuarioCharacter::SimularChat(const FString& Comando)
 {
 	if (AVestuarioGameMode* GM = GetVestuarioGameMode())
 	{
-		GM->HandleChatCommand(TEXT("debug"), Comando);
+		GM->HandleDebugCommand(Comando);
 	}
 }
 
@@ -490,7 +490,7 @@ void AVestuarioCharacter::UpdateFocus()
 
 	if (CurrentLocker)
 	{
-		FocusedActor = CurrentLocker;
+		FocusedActor = CurrentLocker.Get();
 		FocusText = CurrentLocker->GetInteractText(this, nullptr);
 		return;
 	}

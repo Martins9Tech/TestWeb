@@ -13,6 +13,7 @@
 #include "Components/LightComponent.h"
 #include "Engine/GameInstance.h"
 #include "Engine/World.h"
+#include "GameFramework/PlayerController.h"
 #include "EngineUtils.h"
 #include "Kismet/GameplayStatics.h"
 #include "NavigationSystem.h"
@@ -30,6 +31,13 @@ AVestuarioGameMode::AVestuarioGameMode()
 	HUDClass = AVestuarioHUD::StaticClass();
 }
 
+void AVestuarioGameMode::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	// Antes de cualquier BeginPlay: los actores del nivel empiezan antes que el GameMode
+	LoadSounds();
+}
+
 void AVestuarioGameMode::BeginPlay()
 {
 	Super::BeginPlay();
@@ -37,7 +45,6 @@ void AVestuarioGameMode::BeginPlay()
 	StartTime = GetWorld()->GetTimeSeconds();
 	NextDripTime = StartTime + 2.f;
 
-	LoadSounds();
 	CacheLights();
 
 	if (USoundBase* Ambience = GetSound(EVestuarioSound::Ambience))
@@ -205,7 +212,7 @@ void AVestuarioGameMode::OnPlayerDied()
 	}
 	bPlayerDead = true;
 	EndTime = GetElapsedTime();
-	if (AmbienceAudio)
+	if (IsValid(AmbienceAudio))
 	{
 		AmbienceAudio->FadeOut(1.5f, 0.f);
 	}
@@ -227,7 +234,7 @@ void AVestuarioGameMode::OnPlayerEscaped()
 			Player->DisableInput(PC);
 		}
 	}
-	if (AmbienceAudio)
+	if (IsValid(AmbienceAudio))
 	{
 		AmbienceAudio->FadeOut(3.f, 0.f);
 	}
@@ -288,7 +295,7 @@ void AVestuarioGameMode::RestartMap()
 // Twitch
 // ---------------------------------------------------------------------------
 
-void AVestuarioGameMode::HandleChatCommand(const FString& User, const FString& Command)
+void AVestuarioGameMode::HandleChatCommandInternal(const FString& User, const FString& Command, bool bDebug)
 {
 	if (IsGameOver())
 	{
@@ -303,7 +310,6 @@ void AVestuarioGameMode::HandleChatCommand(const FString& User, const FString& C
 		return;
 	}
 
-	const bool bDebug = User == TEXT("debug");
 	if (!bDebug)
 	{
 		const UTwitchSettings* Settings = GetDefault<UTwitchSettings>();
@@ -323,11 +329,11 @@ void AVestuarioGameMode::HandleChatCommand(const FString& User, const FString& C
 
 	if (bNoise)
 	{
-		DoChatNoise(User);
+		DoChatNoise(bDebug ? FString() : User);
 	}
 	else
 	{
-		DoChatHint(User);
+		DoChatHint(bDebug ? FString() : User);
 	}
 }
 
@@ -359,7 +365,7 @@ void AVestuarioGameMode::DoChatNoise(const FString& User)
 	PlaySound3D(EVestuarioSound::Knock, NoiseLocation + FVector(0.f, 0.f, 80.f), 1.4f, FMath::FRandRange(0.8f, 1.1f));
 	UAISense_Hearing::ReportNoiseEvent(this, NoiseLocation, 1.5f, Player, 0.f, Vestuario::ChatNoiseTag());
 
-	const bool bShowName = GetDefault<UTwitchSettings>()->bShowUserNames && User != TEXT("debug");
+	const bool bShowName = GetDefault<UTwitchSettings>()->bShowUserNames && !User.IsEmpty();
 	ShowMessage(bShowName
 		? FText::Format(LOCTEXT("ChatNoiseUser", "{0} ha hecho ruido... algo se acerca."), FText::FromString(User))
 		: LOCTEXT("ChatNoise", "El chat ha hecho ruido... algo se acerca."), 4.f);
@@ -377,7 +383,7 @@ void AVestuarioGameMode::DoChatHint(const FString& User)
 	}
 	PlaySound2D(EVestuarioSound::Whisper, 0.8f);
 
-	const bool bShowName = GetDefault<UTwitchSettings>()->bShowUserNames && User != TEXT("debug");
+	const bool bShowName = GetDefault<UTwitchSettings>()->bShowUserNames && !User.IsEmpty();
 	ShowMessage(bShowName
 		? FText::Format(LOCTEXT("ChatHintUser", "{0} te susurra: \"busca lo que brilla\"."), FText::FromString(User))
 		: LOCTEXT("ChatHint", "Una voz del chat te susurra: \"busca lo que brilla\"."), 5.f);

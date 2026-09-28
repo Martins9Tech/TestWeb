@@ -76,7 +76,7 @@ AEnemyCharacter* AEnemyAIController::GetEnemy() const
 	return Cast<AEnemyCharacter>(GetPawn());
 }
 
-FString AEnemyAIController::GetStateName() const
+FString AEnemyAIController::GetStateDisplayName() const
 {
 	switch (State)
 	{

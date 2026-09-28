@@ -33,6 +33,7 @@ class ELVESTUARIO_API AVestuarioGameMode : public AGameModeBase
 public:
 	AVestuarioGameMode();
 
+	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void Tick(float DeltaSeconds) override;
@@ -59,8 +60,11 @@ public:
 	float GetEndTime() const { return EndTime; }
 
 	// --- Twitch ---
-	/** Punto de entrada de todos los comandos. User "debug" = simulado con las teclas 1 y 2 (sin cooldown). */
-	void HandleChatCommand(const FString& User, const FString& Command);
+	/** Comando real del chat (con cooldowns). */
+	void HandleChatCommand(const FString& User, const FString& Command) { HandleChatCommandInternal(User, Command, false); }
+
+	/** Comando simulado con las teclas 1 y 2 o la consola (sin cooldowns). */
+	void HandleDebugCommand(const FString& Command) { HandleChatCommandInternal(FString(), Command, true); }
 
 	// --- Depuracion ---
 	void ToggleDebugAI() { bDebugAI = !bDebugAI; }
@@ -76,6 +80,7 @@ protected:
 	FVector2D DripInterval = FVector2D(3.f, 8.f);
 
 private:
+	void HandleChatCommandInternal(const FString& User, const FString& Command, bool bDebug);
 	void LoadSounds();
 	void CacheLights();
 	void UpdateFlicker(float Now);

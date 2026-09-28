@@ -13,9 +13,9 @@
 
 #define LOCTEXT_NAMESPACE "Vestuario"
 
-namespace
+namespace FusePanelConst
 {
-	const int32 NumSlots = 3;
+	constexpr int32 NumSlots = 3;
 	const TCHAR* SlotRoman[NumSlots] = { TEXT("I"), TEXT("II"), TEXT("III") };
 
 	// Ranura I a la izquierda mirando el cuadro de frente (el cuadro mira a +X)
@@ -36,11 +36,11 @@ AFusePanel::AFusePanel()
 	PanelMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Panel"));
 	PanelMesh->SetupAttachment(Root);
 
-	for (int32 i = 0; i < NumSlots; ++i)
+	for (int32 i = 0; i < FusePanelConst::NumSlots; ++i)
 	{
 		UBoxComponent* Box = CreateDefaultSubobject<UBoxComponent>(*FString::Printf(TEXT("Slot%d"), i));
 		Box->SetupAttachment(Root);
-		Box->SetRelativeLocation(SlotLocation(i));
+		Box->SetRelativeLocation(FusePanelConst::SlotLocation(i));
 		Box->InitBoxExtent(FVector(5.f, 6.f, 10.f));
 		Box->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 		Box->SetCollisionResponseToAllChannels(ECR_Ignore);
@@ -49,7 +49,7 @@ AFusePanel::AFusePanel()
 
 		UStaticMeshComponent* Fuse = CreateDefaultSubobject<UStaticMeshComponent>(*FString::Printf(TEXT("SlotFuse%d"), i));
 		Fuse->SetupAttachment(Root);
-		Fuse->SetRelativeLocation(SlotLocation(i) + FVector(2.f, 0.f, 0.f));
+		Fuse->SetRelativeLocation(FusePanelConst::SlotLocation(i) + FVector(2.f, 0.f, 0.f));
 		Fuse->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		Fuse->SetVisibility(false);
 		SlotFuses.Add(Fuse);
@@ -57,7 +57,7 @@ AFusePanel::AFusePanel()
 		UTextRenderComponent* Label = CreateDefaultSubobject<UTextRenderComponent>(*FString::Printf(TEXT("SlotLabel%d"), i));
 		Label->SetupAttachment(Root);
 		Label->SetRelativeLocation(FVector(14.f, (1 - i) * 18.f, 17.f));
-		Label->SetText(FText::FromString(SlotRoman[i]));
+		Label->SetText(FText::FromString(FusePanelConst::SlotRoman[i]));
 		Label->SetWorldSize(5.f);
 		Label->SetHorizontalAlignment(EHTA_Center);
 		Label->SetVerticalAlignment(EVRTA_TextCenter);
@@ -102,8 +102,8 @@ void AFusePanel::BeginPlay()
 {
 	Super::BeginPlay();
 	ApplyMeshes();
-	SlotFilled.Init(false, NumSlots);
-	if (CorrectOrder.Num() != NumSlots)
+	SlotFilled.Init(false, FusePanelConst::NumSlots);
+	if (CorrectOrder.Num() != FusePanelConst::NumSlots)
 	{
 		CorrectOrder = { EFuseColor::Blue, EFuseColor::Red, EFuseColor::Green };
 	}
@@ -203,7 +203,7 @@ FText AFusePanel::GetInteractText(const AVestuarioCharacter* Player, UPrimitiveC
 	{
 		return LOCTEXT("PanelBody", "Cuadro de fusibles. Tres ranuras vac\u00EDas: I, II, III.");
 	}
-	const FText SlotName = FText::FromString(SlotRoman[Slot]);
+	const FText SlotName = FText::FromString(FusePanelConst::SlotRoman[Slot]);
 	if (SlotFilled.IsValidIndex(Slot) && SlotFilled[Slot])
 	{
 		return FText::Format(LOCTEXT("SlotFull", "Ranura {0}: ya tiene su fusible."), SlotName);

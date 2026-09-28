@@ -12,9 +12,9 @@
 
 #define LOCTEXT_NAMESPACE "Vestuario"
 
-namespace
+namespace ExitDoorConst
 {
-	const float DoorHalfWidth = 60.f;
+	constexpr float DoorHalfWidth = 60.f;
 }
 
 AExitDoor::AExitDoor()
@@ -26,11 +26,11 @@ AExitDoor::AExitDoor()
 
 	DoorPivot = CreateDefaultSubobject<USceneComponent>(TEXT("DoorPivot"));
 	DoorPivot->SetupAttachment(Root);
-	DoorPivot->SetRelativeLocation(FVector(0.f, DoorHalfWidth, 0.f));
+	DoorPivot->SetRelativeLocation(FVector(0.f, ExitDoorConst::DoorHalfWidth, 0.f));
 
 	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Door"));
 	DoorMesh->SetupAttachment(DoorPivot);
-	DoorMesh->SetRelativeLocation(FVector(0.f, -DoorHalfWidth, 0.f));
+	DoorMesh->SetRelativeLocation(FVector(0.f, -ExitDoorConst::DoorHalfWidth, 0.f));
 
 	EscapeTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("EscapeTrigger"));
 	EscapeTrigger->SetupAttachment(Root);
