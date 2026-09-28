@@ -1,0 +1,17 @@
+# Unreal Engine
+ElVestuario/Binaries/
+ElVestuario/Intermediate/
+ElVestuario/Saved/
+ElVestuario/DerivedDataCache/
+ElVestuario/Build/
+ElVestuario/.vs/
+ElVestuario/*.sln
+ElVestuario/*.vcxproj*
+ElVestuario/.idea/
+ElVestuario/Platforms/
+
+# Python / sistema
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

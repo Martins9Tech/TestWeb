@@ -1,0 +1,82 @@
+{
+  "_comment": "Distribucion de la sala en coordenadas de Unreal (cm, X adelante, Y derecha, Z arriba, yaw en grados). La usan gen_meshes.py (preview) y build_level.py (nivel de Unreal).",
+
+  "static_meshes": [
+    { "mesh": "SM_Room",             "loc": [0, 0, 0],        "yaw": 0 },
+    { "mesh": "SM_LockerRow",        "loc": [420, 470, 0],    "yaw": -90 },
+    { "mesh": "SM_LockerRow",        "loc": [1400, 470, 0],   "yaw": -90 },
+    { "mesh": "SM_LockerRow",        "loc": [620, -470, 0],   "yaw": 90 },
+    { "mesh": "SM_LockerRow",        "loc": [980, -470, 0],   "yaw": 90 },
+    { "mesh": "SM_Bench",            "loc": [380, 300, 0],    "yaw": 0 },
+    { "mesh": "SM_Bench",            "loc": [1250, -300, 0],  "yaw": 0 },
+    { "mesh": "SM_ShowerPartition",  "loc": [1600, -210, 0],  "yaw": 0 },
+    { "mesh": "SM_ShowerPartition",  "loc": [1600, -70, 0],   "yaw": 0 },
+    { "mesh": "SM_ShowerPartition",  "loc": [1600, 70, 0],    "yaw": 0 },
+    { "mesh": "SM_ShowerPartition",  "loc": [1600, 210, 0],   "yaw": 0 },
+    { "mesh": "SM_ShowerHead",       "loc": [1600, -140, 210], "yaw": 0 },
+    { "mesh": "SM_ShowerHead",       "loc": [1600, 0, 210],   "yaw": 0 },
+    { "mesh": "SM_ShowerHead",       "loc": [1600, 140, 210], "yaw": 0 },
+    { "mesh": "SM_PoolStairs",       "loc": [550, 175, 0],    "yaw": 0 },
+    { "mesh": "SM_ExitSign",         "loc": [2, 0, 255],      "yaw": 0 },
+    { "mesh": "SM_LampFixture",      "loc": [250, -220, 380], "yaw": 0 },
+    { "mesh": "SM_LampFixture",      "loc": [250, 220, 380],  "yaw": 0 },
+    { "mesh": "SM_LampFixture",      "loc": [800, -220, 380], "yaw": 0 },
+    { "mesh": "SM_LampFixture",      "loc": [800, 220, 380],  "yaw": 0 },
+    { "mesh": "SM_LampFixture",      "loc": [1350, -220, 380], "yaw": 0 },
+    { "mesh": "SM_LampFixture",      "loc": [1350, 220, 380], "yaw": 0 },
+    { "mesh": "SM_Pipe",             "loc": [300, 488, 335],  "yaw": 0 },
+    { "mesh": "SM_Pipe",             "loc": [500, 488, 335],  "yaw": 0 },
+    { "mesh": "SM_Pipe",             "loc": [700, 488, 335],  "yaw": 0 },
+    { "mesh": "SM_Pipe",             "loc": [900, 488, 335],  "yaw": 0 },
+    { "mesh": "SM_Pipe",             "loc": [1100, 488, 335], "yaw": 0 },
+    { "mesh": "SM_Pipe",             "loc": [1300, 488, 335], "yaw": 0 },
+    { "mesh": "SM_Pipe",             "loc": [1500, 488, 335], "yaw": 0 },
+    { "mesh": "SM_Pipe",             "loc": [300, -488, 335], "yaw": 0 },
+    { "mesh": "SM_Pipe",             "loc": [500, -488, 335], "yaw": 0 },
+    { "mesh": "SM_Pipe",             "loc": [700, -488, 335], "yaw": 0 },
+    { "mesh": "SM_Pipe",             "loc": [900, -488, 335], "yaw": 0 },
+    { "mesh": "SM_Pipe",             "loc": [1100, -488, 335], "yaw": 0 },
+    { "mesh": "SM_Debris",           "loc": [700, 330, 0],    "yaw": 20 },
+    { "mesh": "SM_Debris",           "loc": [1150, -150, 0],  "yaw": 130 },
+    { "mesh": "SM_Debris",           "loc": [850, 0, -120],   "yaw": 70 },
+    { "mesh": "SM_Debris",           "loc": [150, -150, 0],   "yaw": 200 },
+    { "mesh": "SM_Bucket",           "loc": [1110, 260, 0],   "yaw": 0 }
+  ],
+
+  "actors": [
+    { "class": "Locker",     "label": "Taquilla_Entrada", "loc": [250, 470, 0],   "yaw": -90 },
+    { "class": "Locker",     "label": "Taquilla_Duchas",  "loc": [1250, 470, 0],  "yaw": -90 },
+    { "class": "Locker",     "label": "Taquilla_Piscina", "loc": [800, -470, 0],  "yaw": 90 },
+    { "class": "FusePickup", "label": "Fusible_Rojo",     "loc": [390, 300, 47],  "yaw": 30,  "fuse": "RED" },
+    { "class": "FusePickup", "label": "Fusible_Azul",     "loc": [950, -120, -118], "yaw": -60, "fuse": "BLUE" },
+    { "class": "FusePickup", "label": "Fusible_Verde",    "loc": [1540, -140, 2], "yaw": 80,  "fuse": "GREEN" },
+    { "class": "FusePanel",  "label": "CuadroFusibles",   "loc": [0, -300, 140],  "yaw": 0 },
+    { "class": "ClueNote",   "label": "NotaPista",        "loc": [1250, -500, 150], "yaw": 90 },
+    { "class": "ExitDoor",   "label": "PuertaSalida",     "loc": [0, 0, 0],       "yaw": 0 }
+  ],
+
+  "player_start": { "loc": [1450, 0, 100], "yaw": 180 },
+
+  "enemy": {
+    "loc": [200, 0, 120],
+    "yaw": 0,
+    "patrol": [
+      [200, 0, 0], [450, -330, 0], [800, -360, 0], [1350, -130, 0],
+      [1350, 330, 0], [800, 360, 0], [520, 120, 0]
+    ]
+  },
+
+  "lights": [
+    { "label": "Emergencia_Puerta", "loc": [60, 0, 300],   "color": [1.0, 0.12, 0.08], "lumens": 220, "radius": 1100, "tags": ["Flicker", "Emergency"] },
+    { "label": "Emergencia_Duchas", "loc": [1480, 0, 350], "color": [0.55, 0.75, 1.0], "lumens": 90,  "radius": 900,  "tags": ["Flicker", "Emergency"] },
+    { "label": "Luz_1", "loc": [250, -220, 360],  "color": [0.85, 0.95, 1.0], "lumens": 1800, "radius": 1400, "tags": ["PowerLight"] },
+    { "label": "Luz_2", "loc": [250, 220, 360],   "color": [0.85, 0.95, 1.0], "lumens": 1800, "radius": 1400, "tags": ["PowerLight"] },
+    { "label": "Luz_3", "loc": [800, -220, 360],  "color": [0.85, 0.95, 1.0], "lumens": 1800, "radius": 1400, "tags": ["PowerLight"] },
+    { "label": "Luz_4", "loc": [800, 220, 360],   "color": [0.85, 0.95, 1.0], "lumens": 1800, "radius": 1400, "tags": ["PowerLight"] },
+    { "label": "Luz_5", "loc": [1350, -220, 360], "color": [0.85, 0.95, 1.0], "lumens": 1800, "radius": 1400, "tags": ["PowerLight"] },
+    { "label": "Luz_6", "loc": [1350, 220, 360],  "color": [0.85, 0.95, 1.0], "lumens": 1800, "radius": 1400, "tags": ["PowerLight"] },
+    { "label": "Luz_Pasillo", "loc": [-450, 0, 220], "color": [0.6, 0.7, 1.0], "lumens": 60, "radius": 700, "tags": [] }
+  ],
+
+  "nav_bounds": { "center": [550, 0, 50], "extent": [1100, 560, 260] }
+}
