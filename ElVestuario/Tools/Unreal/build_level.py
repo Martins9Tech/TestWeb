@@ -425,6 +425,9 @@ def main():
         task.enter_progress_frame(1, "Creando materiales")
         instances = create_material_instances(create_master_material())
         assign_materials(instances)
+        # Interchange (UE 5.8) puede ignorar la unidad del FBX: modelos 100 veces mas pequenos
+        with open(os.path.join(PROJECT_DIR, "Tools", "Unreal", "fix_scale.py"), encoding="utf-8") as fh:
+            exec(fh.read(), {"__name__": "fix_scale"})
         # UE 5.8 importa con Nanite: con estas cajas grandes la sala desaparece desde dentro
         with open(os.path.join(PROJECT_DIR, "Tools", "Unreal", "disable_nanite.py"), encoding="utf-8") as fh:
             exec(fh.read(), {"__name__": "disable_nanite"})

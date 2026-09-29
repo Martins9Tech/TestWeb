@@ -131,6 +131,9 @@ Después vuelve a ejecutar `build_level.py` en Unreal.
 
 ## Problemas frecuentes
 
+- **Todo se ve negro y la sala parece diminuta o lejana** (Unreal 5.8): el importador Interchange ignoró la unidad de los FBX. Ejecuta `Tools/Unreal/fix_scale.py`.
+- **El jugador cae al vacío**: ejecuta `Tools/Unreal/add_collision_boxes.py`, que añade colisión con cubos invisibles.
+
 - **"Missing modules / Could not be compiled"**: falta Visual Studio con las cargas de C++, o la versión de Unreal no coincide. Revisa los requisitos y compila desde el `.sln` para ver el error exacto.
 - **El script de Python no aparece o falla**: comprueba en **Edit → Plugins** que *Python Editor Script Plugin* y *Editor Scripting Utilities* están activos, y reinicia el editor.
 - **El enemigo no se mueve**:
