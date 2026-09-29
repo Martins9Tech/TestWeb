@@ -425,6 +425,9 @@ def main():
         task.enter_progress_frame(1, "Creando materiales")
         instances = create_material_instances(create_master_material())
         assign_materials(instances)
+        # Colision fiable aunque el importador ignore las cajas UCX_
+        with open(os.path.join(PROJECT_DIR, "Tools", "Unreal", "fix_collision.py"), encoding="utf-8") as fh:
+            exec(fh.read(), {"__name__": "fix_collision"})
         task.enter_progress_frame(1, "Montando el nivel")
         build_level()
         task.enter_progress_frame(1, "Listo")
