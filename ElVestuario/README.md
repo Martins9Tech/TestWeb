@@ -36,13 +36,13 @@ Motor: **Unreal Engine 5 (C++)**.
 ## Requisitos
 
 - **Windows 10/11** y una GPU compatible con DX12. Una RTX 2070 o superior es lo recomendable para Lumen.
-- **Unreal Engine 5.5 o 5.6**, instalado desde el Epic Games Launcher.
+- **Unreal Engine 5.8** (también vale 5.5-5.7), instalado desde el Epic Games Launcher.
 - **Visual Studio 2022** (Community es gratis) con estas cargas de trabajo:
   - "Desarrollo para el escritorio con C++"
   - "Desarrollo de juegos con C++", marcando dentro el componente *Unreal Engine installer*
   - el **SDK de Windows 10/11** más reciente
 
-> Si tu versión de Unreal no es la 5.6: haz clic derecho en `ElVestuario.uproject` → **Switch Unreal Engine version…** y elige la tuya.
+> Si tu versión de Unreal no es la 5.8: haz clic derecho en `ElVestuario.uproject` → **Switch Unreal Engine version…** y elige la tuya.
 
 ## Puesta en marcha (solo la primera vez)
 
