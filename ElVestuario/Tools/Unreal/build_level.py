@@ -430,6 +430,9 @@ def main():
             exec(fh.read(), {"__name__": "fix_collision"})
         task.enter_progress_frame(1, "Montando el nivel")
         build_level()
+        # Colision garantizada con cubos invisibles (Interchange puede ignorar las UCX_)
+        with open(os.path.join(PROJECT_DIR, "Tools", "Unreal", "add_collision_boxes.py"), encoding="utf-8") as fh:
+            exec(fh.read(), {"__name__": "add_collision_boxes"})
         task.enter_progress_frame(1, "Listo")
     log("TODO LISTO. Pulsa Play (Alt+P) para jugar.")
 
